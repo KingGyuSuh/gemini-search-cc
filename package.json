@@ -1,9 +1,9 @@
 {
   "name": "gemini-search-cc",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Real-time Google Search, fact-checking, changelog tracking & deep research plugin for Claude Code — powered by Gemini CLI.",
+  "description": "Real-time Google Search, fact-checking, changelog tracking & deep research plugin for Claude Code — powered by the Antigravity CLI (agy).",
   "license": "Apache-2.0",
   "author": "KingGyuSuh",
   "repository": {
@@ -13,6 +13,8 @@
   "keywords": [
     "claude",
     "claude-code",
+    "antigravity",
+    "agy",
     "gemini",
     "search",
     "google-search",

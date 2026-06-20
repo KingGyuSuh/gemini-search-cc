@@ -1,11 +1,11 @@
 {
   "name": "gemini",
-  "version": "1.0.0",
-  "description": "Real-time Google Search, fact-checking, changelog tracking & deep research for Claude Code — powered by Gemini CLI.",
+  "version": "2.0.0",
+  "description": "Real-time Google Search, fact-checking, changelog tracking & deep research for Claude Code — powered by the Antigravity CLI (agy).",
   "author": {
-    "name": "suhKingGyu"
+    "name": "KingGyuSuh"
   },
-  "repository": "https://github.com/suhKingGyu/gemini-search-cc",
+  "repository": "https://github.com/KingGyuSuh/gemini-search-cc",
   "license": "Apache-2.0",
-  "keywords": ["search", "google-search", "gemini", "fact-check", "audit", "research"]
+  "keywords": ["search", "google-search", "gemini", "antigravity", "agy", "fact-check", "audit", "research", "changelog", "compare"]
 }

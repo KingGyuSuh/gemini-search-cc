@@ -4,7 +4,7 @@ argument-hint: '<tech-a> vs <tech-b>'
 disable-model-invocation: true
 allowed-tools: Bash AskUserQuestion
 ---
-Compare two technologies, frameworks, libraries, or tools using Gemini's real-time
+Compare two technologies, frameworks, libraries, or tools using the Antigravity CLI's real-time
 grounded Google Search to provide current benchmarks, community sentiment, and recommendations.
 
 Raw slash-command arguments:
@@ -32,7 +32,7 @@ Raw slash-command arguments:
    - **Recommendation:** One sentence tailored to the user's current project context
 
 ## Constraints
-- Do not paraphrase the Gemini output.
+- Do not paraphrase the search output.
 - Present both options fairly — do not show bias toward either technology.
 - Focus on current data (2025-2026), not historical reputation.
 - Include concrete metrics where available (bundle size, benchmark numbers, GitHub stars, npm downloads).

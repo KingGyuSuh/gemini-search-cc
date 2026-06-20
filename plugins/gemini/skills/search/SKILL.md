@@ -1,10 +1,10 @@
 ---
-description: Perform a grounded Google Web Search using Gemini CLI.
+description: Perform a grounded Google Web Search using the Antigravity CLI (agy).
 argument-hint: '<query>'
 disable-model-invocation: true
 allowed-tools: Bash AskUserQuestion
 ---
-Perform a grounded Google Web Search using the Gemini CLI.
+Perform a grounded Google Web Search using the Antigravity CLI (`agy`).
 
 Raw slash-command arguments:
 `$ARGUMENTS`

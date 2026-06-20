@@ -1,21 +1,21 @@
 ---
-description: Internal guidance for presenting Gemini search results to the user.
+description: Internal guidance for presenting the search results to the user.
 user-invocable: false
 ---
 # Search Result Handling — Internal Skill
 
-This skill provides guidance on how to handle and present Gemini search results
+This skill provides guidance on how to handle and present the search results
 within the Claude Code conversation.
 
 ## Principles
 
-1. **Verbatim first.** Always present the raw Gemini output before any analysis.
-   The user should see exactly what Gemini returned.
+1. **Verbatim first.** Always present the raw search output before any analysis.
+   The user should see exactly what the search returned.
 
-2. **Do not paraphrase search results.** If Gemini says "React 19.1.0 was released
+2. **Do not paraphrase search results.** If the search says "React 19.1.0 was released
    on March 2026", do not rephrase it as "a recent version of React was released."
 
-3. **Cite what Gemini cited.** If the search output includes URLs or source names,
+3. **Cite what the search cited.** If the search output includes URLs or source names,
    preserve them. Do not invent additional citations.
 
 4. **Additive analysis only.** After showing raw results, you may add:

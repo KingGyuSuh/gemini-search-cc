@@ -1,7 +1,7 @@
 Gemini Search for Claude Code (gemini-search-cc)
 Copyright 2026 KingGyuSuh
 
-This product uses the Gemini CLI (https://github.com/google-gemini/gemini-cli),
+This product uses the Antigravity CLI (agy) (https://github.com/google-antigravity/antigravity-cli),
 licensed under the Apache License 2.0, Copyright Google.
 
 Plugin architecture inspired by codex-plugin-cc
