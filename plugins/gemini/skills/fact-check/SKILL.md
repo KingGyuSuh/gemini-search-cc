@@ -1,10 +1,10 @@
 ---
-description: Fact-check a technical claim using Gemini's grounded Google Search.
+description: Fact-check a technical claim using the Antigravity CLI's grounded Google Search.
 argument-hint: '<claim to verify>'
 disable-model-invocation: true
 allowed-tools: Bash AskUserQuestion
 ---
-Verify a technical claim, assumption, or statement using Gemini's real-time grounded Google Search.
+Verify a technical claim, assumption, or statement using the Antigravity CLI's real-time grounded Google Search.
 
 Use this when you encounter claims in code comments, documentation, Stack Overflow answers,
 or conversation that need verification against current, authoritative sources.
@@ -33,7 +33,7 @@ Raw slash-command arguments:
    - **Key Correction:** If the claim was wrong, state the correct information with source
 
 ## Constraints
-- Do not paraphrase the Gemini output.
+- Do not paraphrase the search output.
 - Do not speculate beyond what the search results show.
 - If sources disagree, present both sides and note the disagreement.
 - Always cite the sources that support or refute the claim.

@@ -1,10 +1,10 @@
 ---
-description: Internal guidance for composing effective Gemini search queries.
+description: Internal guidance for composing effective grounded search queries.
 user-invocable: false
 ---
 # Gemini Prompting Guide — Internal Skill
 
-This skill helps you compose effective queries when using Gemini's grounded
+This skill helps you compose effective queries when using the Antigravity CLI's grounded
 Google Search via any of the Gemini skills (`search`, `research`, `audit`, `fact-check`, `changelog`, `compare`).
 
 ## Query Composition Principles
@@ -14,7 +14,7 @@ Bad: `"React updates"`
 Good: `"React 19 breaking changes migration from React 18 2026"`
 
 ### Include Year Context
-Gemini's grounded search benefits from temporal markers.
+The Antigravity CLI's grounded search benefits from temporal markers.
 Bad: `"best Node.js framework"`
 Good: `"best Node.js framework 2026 comparison performance"`
 
@@ -87,6 +87,6 @@ Good: Run three separate searches, one per topic.
 ## Anti-Patterns
 
 - Do not include conversational filler: "Can you please search for..."
-- Do not ask Gemini to generate code — it's optimized for search, not codegen
+- Do not ask the search engine to generate code — it's optimized for search, not codegen
 - Do not combine unrelated queries — run them separately
 - Do not repeat failed queries verbatim — rephrase with different keywords

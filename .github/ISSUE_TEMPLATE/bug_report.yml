@@ -36,6 +36,6 @@ body:
     id: environment
     attributes:
       label: Environment
-      description: OS, Node.js version, Gemini CLI version.
+      description: OS, Node.js version, Antigravity CLI (agy) version.
     validations:
       required: true

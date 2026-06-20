@@ -30,7 +30,8 @@ npm-debug.log*
 .claude/
 CLAUDE.md
 
-# Gemini
+# Antigravity / Gemini
+.antigravity/
 .geminiignore
 
 # Temp

@@ -1,10 +1,10 @@
 ---
-description: Security & dependency audit using Gemini's grounded Google Search.
+description: Security & dependency audit using the Antigravity CLI's grounded Google Search.
 argument-hint: '<package or technology>'
 disable-model-invocation: true
 allowed-tools: Bash AskUserQuestion Glob Read
 ---
-Perform a security and dependency audit using Gemini CLI's grounded Google Search.
+Perform a security and dependency audit using the Antigravity CLI's grounded Google Search.
 
 Use this to check packages, libraries, or technologies for vulnerabilities,
 deprecations, and compatibility issues before adopting or upgrading them.
@@ -38,6 +38,6 @@ Raw slash-command arguments:
    - **Summary:** One-sentence recommendation (proceed, update, replace, or avoid)
 
 ## Constraints
-- Do not paraphrase the Gemini output.
+- Do not paraphrase the search output.
 - Always err on the side of caution — if uncertain, recommend the user investigate further.
 - Do not auto-fix or auto-update any dependencies. Only advise.

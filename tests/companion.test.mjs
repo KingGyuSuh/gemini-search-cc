@@ -8,9 +8,14 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const companion = join(__dirname, '..', 'plugins', 'gemini', 'scripts', 'gemini-companion.mjs');
 
 function run(...args) {
+  return runWithEnv({}, ...args);
+}
+
+function runWithEnv(env, ...args) {
   return spawnSync('node', [companion, ...args], {
     encoding: 'utf-8',
     timeout: 5000,
+    env: { ...process.env, ...env },
   });
 }
 
@@ -73,5 +78,23 @@ describe('gemini-companion subcommand routing', () => {
     const result = run('compare');
     assert.notEqual(result.status, 0);
     assert.match(result.stderr, /Usage:.*compare/);
+  });
+});
+
+describe('gemini-companion setup health check', () => {
+  const MISSING_AGY = { AGY_BIN: '/nonexistent/agy-binary-xyz' };
+
+  it('setup --json emits valid JSON and exits non-zero when agy is missing', () => {
+    const result = runWithEnv(MISSING_AGY, 'setup', '--json');
+    assert.notEqual(result.status, 0);
+    const status = JSON.parse(result.stdout.trim());
+    assert.equal(status.installed, false);
+    assert.equal(status.loggedIn, false);
+  });
+
+  it('setup (non-json) renders the status table when agy is missing', () => {
+    const result = runWithEnv(MISSING_AGY, 'setup');
+    assert.notEqual(result.status, 0);
+    assert.match(result.stdout, /Installed \| No/);
   });
 });

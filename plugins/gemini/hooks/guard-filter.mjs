@@ -1,8 +1,16 @@
 import fs from 'node:fs';
 
-// Read stdin from Claude Code hook system
-const input = JSON.parse(fs.readFileSync(0, 'utf-8'));
-const command = (input.tool_input?.command || '').trim();
+// Read stdin from Claude Code hook system. This is an ADVISORY guard, so any
+// problem reading/parsing the payload must fail OPEN (emit `{}`, exit 0) — a bad
+// payload must never block a Bash call or spew a stack trace into the session.
+let input;
+try {
+  input = JSON.parse(fs.readFileSync(0, 'utf-8') || '{}');
+} catch {
+  process.stdout.write(JSON.stringify({}));
+  process.exit(0);
+}
+const command = String(input?.tool_input?.command ?? '').trim();
 const commandLower = command.toLowerCase();
 
 // Only intercept package install/add commands where audit is genuinely useful.
@@ -26,7 +34,10 @@ for (const eco of ecosystems) {
   );
   if (!matchesManager) continue;
 
-  const matchesKeyword = eco.keywords.some((k) => commandLower.includes(k));
+  // Match the keyword as a whole TOKEN, not a substring, so e.g.
+  // `pip download mypackage-installer` does not false-trigger on "install".
+  const tokens = commandLower.split(/\s+/);
+  const matchesKeyword = eco.keywords.some((k) => tokens.includes(k));
   if (!matchesKeyword) continue;
 
   detected = eco.name;
@@ -34,8 +45,10 @@ for (const eco of ecosystems) {
 }
 
 if (detected) {
-  // Extract the likely package name(s) from the command for a more targeted suggestion
-  const parts = command.split(/\s+/);
+  // Extract the likely package name(s) for a more targeted suggestion. Only look
+  // at the first command segment so chained commands (`&& rm -rf …`) don't leak in.
+  const firstSegment = command.split(/&&|\|\||;|\|/)[0];
+  const parts = firstSegment.trim().split(/\s+/);
   const filtered = parts.filter(
     (p) => !p.startsWith('-') && !p.startsWith('/') && p.length > 1,
   );

@@ -1,10 +1,10 @@
 ---
-description: Deep multi-step research using Gemini's grounded Google Search.
+description: Deep multi-step research using the Antigravity CLI's grounded Google Search.
 argument-hint: '<topic>'
 disable-model-invocation: true
 allowed-tools: Bash AskUserQuestion
 ---
-Perform a deep, multi-step research investigation using Gemini CLI.
+Perform a deep, multi-step research investigation using the Antigravity CLI (`agy`).
 
 This is the **deep research** mode — slower but more thorough than `/gemini:search`.
 Use this when you need comprehensive analysis with cross-referenced sources.
@@ -16,7 +16,7 @@ Raw slash-command arguments:
 
 1. If `$ARGUMENTS` is empty, use `AskUserQuestion` to ask what topic to research.
 
-2. Run the companion script with a 5-minute timeout:
+2. Run the companion script with a 10-minute timeout:
    ```bash
    node "${CLAUDE_PLUGIN_ROOT}/scripts/gemini-companion.mjs" research "$ARGUMENTS"
    ```
@@ -33,6 +33,6 @@ Raw slash-command arguments:
    - **Recommended Next Steps:** What the user should do with this information
 
 ## Constraints
-- Do not paraphrase the Gemini output.
+- Do not paraphrase the search output.
 - Do not fabricate citations — only cite what the search returned.
-- This command has a longer timeout (5 min). Warn the user if it might take a moment.
+- This command has a longer timeout (10 min). Warn the user if it might take a moment.

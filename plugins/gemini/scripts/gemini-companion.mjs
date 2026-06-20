@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 /**
- * gemini-companion.mjs — Main CLI entry point bridging Claude Code to Gemini CLI.
+ * gemini-companion.mjs — Main CLI entry point bridging Claude Code to the
+ * Antigravity CLI (`agy`), the successor to the now-sunset Gemini CLI.
  *
  * Subcommands:
  *   search <query>      — Quick grounded Google Search
@@ -10,12 +11,12 @@
  *   factcheck <claim>   — Fact-check a technical claim
  *   changelog <package> — Latest release notes
  *   compare <a> vs <b>  — Technology comparison
- *   setup               — Health check for Gemini CLI
+ *   setup               — Health check for the Antigravity CLI (agy)
  */
 
 import {
-  geminiSearch, geminiResearch, geminiFactCheck,
-  geminiChangelog, geminiCompare, healthCheck,
+  agySearch, agyResearch, agyFactCheck,
+  agyChangelog, agyCompare, healthCheck,
 } from './lib/gemini.mjs';
 import { renderReport, renderError, renderHealthCheck } from './lib/render.mjs';
 import { getWorkspaceContext } from './lib/workspace.mjs';
@@ -30,13 +31,14 @@ async function main() {
         console.error('Usage: gemini-companion.mjs search <query>');
         process.exit(1);
       }
-      const result = await geminiSearch(query);
+      const result = await agySearch(query);
       if (result.ok) {
         console.log(renderReport({ query, output: result.output, mode: 'search', stats: result.stats }));
       } else {
         console.error(renderError(result.error, {
+          mode: 'search',
           exitCode: result.exitCode,
-          suggestion: 'Check that Gemini CLI is installed and authenticated (`gemini login`).',
+          suggestion: 'Check that the Antigravity CLI (agy) is installed and authenticated — run `/gemini:setup` or see https://antigravity.google/docs/cli-using.',
         }));
         process.exit(1);
       }
@@ -48,11 +50,12 @@ async function main() {
         console.error('Usage: gemini-companion.mjs research <query>');
         process.exit(1);
       }
-      const result = await geminiResearch(query);
+      const result = await agyResearch(query);
       if (result.ok) {
         console.log(renderReport({ query, output: result.output, mode: 'research', stats: result.stats }));
       } else {
         console.error(renderError(result.error, {
+          mode: 'research',
           exitCode: result.exitCode,
           suggestion: 'Deep research requires a stable connection. Try again or use `search` for a quicker lookup.',
         }));
@@ -86,11 +89,11 @@ async function main() {
         'Provide a structured report with severity levels (Critical/High/Medium/Low).',
       ].join('\n');
 
-      const result = await geminiSearch(auditPrompt, { timeout: 300_000 });
+      const result = await agySearch(auditPrompt, { timeout: 300_000 });
       if (result.ok) {
         console.log(renderReport({ query, output: result.output, mode: 'audit', stats: result.stats }));
       } else {
-        console.error(renderError(result.error, { exitCode: result.exitCode }));
+        console.error(renderError(result.error, { mode: 'audit', exitCode: result.exitCode }));
         process.exit(1);
       }
       break;
@@ -101,11 +104,12 @@ async function main() {
         console.error('Usage: gemini-companion.mjs factcheck <claim>');
         process.exit(1);
       }
-      const result = await geminiFactCheck(query);
+      const result = await agyFactCheck(query);
       if (result.ok) {
         console.log(renderReport({ query, output: result.output, mode: 'factcheck', stats: result.stats }));
       } else {
         console.error(renderError(result.error, {
+          mode: 'factcheck',
           exitCode: result.exitCode,
           suggestion: 'Try rephrasing the claim as a specific, verifiable statement.',
         }));
@@ -119,11 +123,12 @@ async function main() {
         console.error('Usage: gemini-companion.mjs changelog <package[@version]>');
         process.exit(1);
       }
-      const result = await geminiChangelog(query);
+      const result = await agyChangelog(query);
       if (result.ok) {
         console.log(renderReport({ query, output: result.output, mode: 'changelog', stats: result.stats }));
       } else {
         console.error(renderError(result.error, {
+          mode: 'changelog',
           exitCode: result.exitCode,
           suggestion: 'Check the package name spelling or try searching on npm/PyPI directly.',
         }));
@@ -137,11 +142,12 @@ async function main() {
         console.error('Usage: gemini-companion.mjs compare <tech-a> vs <tech-b>');
         process.exit(1);
       }
-      const result = await geminiCompare(query);
+      const result = await agyCompare(query);
       if (result.ok) {
         console.log(renderReport({ query, output: result.output, mode: 'compare', stats: result.stats }));
       } else {
         console.error(renderError(result.error, {
+          mode: 'compare',
           exitCode: result.exitCode,
           suggestion: 'Try a more specific comparison, e.g., "Bun vs Deno for CLI tools".',
         }));

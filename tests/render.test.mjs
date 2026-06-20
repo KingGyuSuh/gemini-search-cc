@@ -8,7 +8,7 @@ describe('renderReport', () => {
     assert.match(out, /## Gemini Grounded Search Results/);
     assert.match(out, /\*\*Query:\*\* test/);
     assert.match(out, /result/);
-    assert.match(out, /Powered by Gemini CLI/);
+    assert.match(out, /Powered by Antigravity CLI \(agy\)/);
   });
 
   it('renders all mode labels correctly', () => {
@@ -59,6 +59,11 @@ describe('renderError', () => {
     assert.match(out, /\*\*Exit Code:\*\* 42/);
   });
 
+  it('shows a genuine exit code of 0 (not hidden by a truthy check)', () => {
+    const out = renderError('fail', { exitCode: 0 });
+    assert.match(out, /\*\*Exit Code:\*\* 0/);
+  });
+
   it('includes suggestion when provided', () => {
     const out = renderError('fail', { suggestion: 'try again' });
     assert.match(out, /\*\*Suggestion:\*\* try again/);
@@ -68,13 +73,24 @@ describe('renderError', () => {
     const out = renderError('fail', {});
     assert.ok(!out.includes('Exit Code'));
   });
+
+  it('labels the error header by mode', () => {
+    assert.match(renderError('x', { mode: 'audit' }), /## Gemini Security Audit Error/);
+    assert.match(renderError('x', { mode: 'research' }), /## Gemini Deep Research Error/);
+    assert.match(renderError('x', { mode: 'compare' }), /## Gemini Comparison Error/);
+  });
+
+  it('falls back to the generic "Search" header when no mode is given', () => {
+    assert.match(renderError('x'), /## Gemini Search Error/);
+  });
 });
 
 describe('renderHealthCheck', () => {
   it('renders not-installed state', () => {
     const out = renderHealthCheck({ installed: false, version: null, loggedIn: false });
     assert.match(out, /Installed \| No/);
-    assert.match(out, /npm install -g @google\/gemini-cli/);
+    assert.match(out, /antigravity\.google\/cli\/install\.sh/);
+    assert.match(out, /brew install --cask antigravity-cli/);
   });
 
   it('renders installed and logged-in state', () => {
@@ -87,7 +103,7 @@ describe('renderHealthCheck', () => {
   it('renders installed but not logged-in state', () => {
     const out = renderHealthCheck({ installed: true, version: '1.0.0', loggedIn: false });
     assert.match(out, /Logged In \| No/);
-    assert.match(out, /gemini login/);
+    assert.match(out, /ANTIGRAVITY_API_KEY/);
   });
 
   it('handles unknown version', () => {

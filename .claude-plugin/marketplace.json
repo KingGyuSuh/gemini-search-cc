@@ -1,19 +1,19 @@
 {
   "name": "gemini-search",
   "owner": {
-    "name": "suhKingGyu"
+    "name": "KingGyuSuh"
   },
   "metadata": {
-    "description": "Real-time Google Search & deep research plugins for Claude Code, powered by Gemini CLI.",
-    "version": "1.0.0"
+    "description": "Real-time Google Search & deep research plugins for Claude Code, powered by the Antigravity CLI (agy).",
+    "version": "2.0.0"
   },
   "plugins": [
     {
       "name": "gemini",
-      "description": "Real-time Google Search, fact-checking, changelog tracking & deep research for Claude Code — powered by Gemini CLI.",
-      "version": "1.0.0",
+      "description": "Real-time Google Search, fact-checking, changelog tracking & deep research for Claude Code — powered by the Antigravity CLI (agy).",
+      "version": "2.0.0",
       "author": {
-        "name": "suhKingGyu"
+        "name": "KingGyuSuh"
       },
       "source": "./plugins/gemini"
     }

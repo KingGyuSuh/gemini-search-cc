@@ -5,7 +5,7 @@ disable-model-invocation: true
 allowed-tools: Bash AskUserQuestion Glob Read
 ---
 Fetch the latest release notes, changelog, and breaking changes for a specific package
-or technology using Gemini's grounded Google Search.
+or technology using the Antigravity CLI's grounded Google Search.
 
 Use this before upgrading dependencies, adopting new versions, or investigating
 what changed between releases.
@@ -40,7 +40,7 @@ Raw slash-command arguments:
    - **Recommendation:** Safe to upgrade / Review changes first / Wait for patch
 
 ## Constraints
-- Do not paraphrase the Gemini output.
+- Do not paraphrase the search output.
 - Be precise about version numbers — say "v4.2.1" not "a recent version."
 - If the search returns changelogs for a different version than requested, note the discrepancy.
 - Do not auto-update any dependencies. Only advise.
