@@ -61,8 +61,14 @@ function usePtyWrapper() {
 }
 
 /** Build the argv passed to the `agy` binary for a headless prompt. */
-function buildAgyArgs(prompt) {
+function buildAgyArgs(prompt, timeoutMs) {
   const args = ['-p', prompt, '--dangerously-skip-permissions'];
+  // agy's print-mode wait defaults to only 5m0s; without this a long run (e.g.
+  // /gemini:research's 10-min budget) would hit agy's own cap first. Match it to
+  // our timeout. agy parses Go durations, so seconds ("600s") is valid.
+  if (timeoutMs && Number.isFinite(timeoutMs)) {
+    args.push('--print-timeout', `${Math.ceil(timeoutMs / 1000)}s`);
+  }
   if (OUTPUT_FORMAT) args.push('--output-format', OUTPUT_FORMAT);
   return args;
 }
@@ -70,10 +76,11 @@ function buildAgyArgs(prompt) {
 /**
  * Resolve the actual command + argv to spawn, wrapping in `script` when needed.
  * @param {string} prompt
+ * @param {number} [timeout] - ms, forwarded to agy as --print-timeout
  * @returns {{ file: string, args: string[], pty: boolean }}
  */
-function resolveInvocation(prompt) {
-  const agyArgs = buildAgyArgs(prompt);
+function resolveInvocation(prompt, timeout) {
+  const agyArgs = buildAgyArgs(prompt, timeout);
 
   if (!usePtyWrapper()) {
     // Direct invocation (Windows, or PTY disabled). May hit issue #76.
@@ -100,10 +107,13 @@ function resolveInvocation(prompt) {
  * @returns {{ stdout: string, stderr: string, status: number|null, signal: string|null, error: Error|undefined, pty: boolean }}
  */
 function runAgy(prompt, timeout) {
-  const { file, args, pty } = resolveInvocation(prompt);
+  const { file, args, pty } = resolveInvocation(prompt, timeout);
+  // agy is told to stop at `timeout` (--print-timeout); give spawnSync a small
+  // grace so agy's own (graceful) timeout fires before our hard SIGKILL backstop.
+  const hardTimeout = Number.isFinite(timeout) ? timeout + 15_000 : timeout;
   const res = spawnSync(file, args, {
     encoding: 'utf-8',
-    timeout,
+    timeout: hardTimeout,
     maxBuffer: 10 * 1024 * 1024,
     stdio: ['ignore', 'pipe', 'pipe'],
     killSignal: 'SIGKILL',

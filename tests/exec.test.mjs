@@ -128,4 +128,12 @@ describe('agySearch subprocess execution path', () => {
     assert.equal(r.ok, false);
     assert.equal(r.error, 'quota exceeded');
   });
+
+  it('forwards a --print-timeout derived from the caller timeout (agy default is only 5m)', () => {
+    // The fake echoes its argv so we can assert the flag the engine passes to agy.
+    const bin = makeFakeAgy(`echo "$@"\nexit 0`);
+    const r = runAgySearch(bin); // helper invokes agySearch with { timeout: 10000 }
+    assert.equal(r.ok, true);
+    assert.match(r.output, /--print-timeout 10s/);
+  });
 });
